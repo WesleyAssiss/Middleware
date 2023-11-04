@@ -1,5 +1,6 @@
 import rpyc
 from connector import ConnectionDB
+from sub_controlador import *
 from pub_controlador import *
 
 
@@ -11,16 +12,19 @@ class MeuServico(rpyc.Service):
         print("connected")
     
     def exposed_select_one(self):
-        self.db.select_one()
+        resp = self.db.select_one()
+        return resp
     
     def exposed_select_many(self):
-        self.db.select_many()
+        resp = self.db.select_many()
+        return resp
 
     def exposed_mudar_estado_atuador(self):
         public("Alarme desativado")
     
     def exposed_acompanhar_sensor(self):
-        pass
+        resp = on_message()
+        return resp
 
     def on_disconnect(self, conn):
         print("disconnect")
