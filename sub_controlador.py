@@ -5,7 +5,7 @@ from broker_configs import broker_configs
 conn_db = ConnectionDB()
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    print("Connected with result code " + str(rc))
     client.subscribe(broker_configs["TOPIC"])
 
 def on_message(client, userdata, msg):
@@ -14,7 +14,7 @@ def on_message(client, userdata, msg):
 
 def trata_message(msg):
     acao, data_hora = msg.payload.decode().split(";")
-    conn_db.insert(acao, data_hora)
+    conn_db.insert(acao=acao, data_hora=data_hora, estado="Alarme ativado")
 
     
 client = mqtt.Client()
