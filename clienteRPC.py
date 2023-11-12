@@ -10,7 +10,9 @@ def select_one():
 
 def select_many():
     resp = proxy.root.select_many()
-    print(resp)
+
+    for value in resp:
+        print(value)
 
 
 def mudar_estado_atuador():
@@ -18,17 +20,17 @@ def mudar_estado_atuador():
     print(resp)
 
 
-def acompanhar_sensor(id):
+def acompanhar_sensor():
     resp = proxy.root.acompanhar_sensor()
-    print(resp)
+    print(f'resposta: {resp}')
 
 
 while True:
     print()
-    entrada = input("1 - Entrar no Sistema\n"
-                    "2 - Entrar na Sala\n"
-                    "3 - Sair da Sala\n"
-                    "4 - Enviar mensagem\n"
+    entrada = input("1 - Mostrar última atualização sensor\n"
+                    "2 - Mostrar todos os dados coletados pelo sensor\n"
+                    "3 - Mudar estado do atuador\n"
+                    "4 - Acompanhar sensor\n"
                     "9 - Finalizar Sistema\n"
                     "Escolha uma opção: ")
     print()
@@ -46,7 +48,7 @@ while True:
         acompanhar_sensor()
 
     elif int(entrada) == 9:
-        proxy.closed()
+        proxy.close()
         break
     else:
         print("Entrada inválida.")

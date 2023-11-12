@@ -1,13 +1,11 @@
 import rpyc
 from connector import ConnectionDB
-from sub_controlador import *
-from pub_controlador import *
 
 
 class MeuServico(rpyc.Service):
 
     db = ConnectionDB()
-
+    
     def on_connect(self, conn):
         print("connected")
     
@@ -19,18 +17,23 @@ class MeuServico(rpyc.Service):
         resp = self.db.select_many()
         return resp
 
-    def exposed_mudar_estado_atuador(self):
-        public("Alarme desativado")
+    # def exposed_mudar_estado_atuador(self):
+    #     return dados_do_sensor
     
-    def exposed_acompanhar_sensor(self):
-        resp = on_message()
-        return resp
+    # def exposed_acompanhar_sensor(self):
+    #     with dados_do_sensor_lock:
+    #         if dados_do_sensor.empty:
+    #             return dados_do_sensor.get()
+        # return None
 
     def on_disconnect(self, conn):
         print("disconnect")
 
 
-from rpyc.utils.server import ThreadedServer
+if __name__=="__main__":
+    from rpyc.utils.server import ThreadedServer
+    
+    print('servidor on')
 
-t = ThreadedServer(MeuServico, port=18861)
-t.start()
+    t = ThreadedServer(MeuServico, port=18861)
+    t.start()

@@ -8,6 +8,10 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     print(msg.payload.decode())
+    acende_lampada()
+
+def acende_lampada():
+    print("ALARME ACIONADO")
  
 client = mqtt.Client()
 client.connect(broker_configs["HOST"], broker_configs["PORT"], broker_configs["KEPPALIVE"])

@@ -1,9 +1,9 @@
-import sys
-import subprocess
+import connector
 
-# def run_sub_controlador():
+db = connector.ConnectionDB()
 
-arquivo = 'sub_controlador.py'
 
-processo = subprocess.Popen([sys.executable, arquivo])
-subprocess.Popen.wait(processo)
+resp = db.select_many()
+
+for i in resp:
+    print(i)

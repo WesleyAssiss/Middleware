@@ -1,12 +1,11 @@
-from datetime import datetime
-import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
 from broker_configs import broker_configs
 
-mqtt_client = mqtt.Client('meu_publisher')
-mqtt_client.connect(broker_configs["HOST"], broker_configs["PORT"])
 
-pyload = f"movimento detectado;{datetime.now()}"
+broker_address = broker_configs["HOST"]
+port = broker_configs["PORT"]
 
-mqtt_client.publish(broker_configs["TOPIC"], payload=pyload)
+topic = broker_configs["TOPIC"]
+message = "MOVIMENTO DETECTADO"
 
-print("publiquei!!!")
+publish.single(topic, message, hostname=broker_address, port=port)
