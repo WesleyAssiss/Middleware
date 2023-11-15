@@ -1,11 +1,29 @@
 version: "3"
 services:
- mqtt:
-      image: toke/mosquitto
-      network_mode: bridge
-      container_name: mqtt
-      expose:
-        - 1883
-      ports:
-        - 1883:1883
-      restart: unless-stopped
+ redis:
+    image: redis:7
+    container_name: master
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    networks:
+      - redis-replication
+    volumes:
+      - ./data:/data
+
+ redis-slave:
+    image: redis:7
+    container_name: slave
+    ports:
+      - "6380:6379"
+    command: redis-server /etc/redis.conf --replicaof master 6379
+    depends_on:
+      - redis
+    volumes:
+      - ./redis.conf:/etc/redis.conf
+    networks:
+      - redis-replication
+
+networks:
+  redis-replication:
+    driver: bridge

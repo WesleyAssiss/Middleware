@@ -1,10 +1,11 @@
-import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
 from broker_configs import broker_configs
 
-def public(pyload = "teste"):
-    mqtt_client = mqtt.Client('meu_publisher')
-    mqtt_client.connect(broker_configs["HOST"], broker_configs["PORT"])
-    
-    mqtt_client.publish(broker_configs["TOPIC"], payload=pyload)
+broker_address = broker_configs["HOST"]
+port = broker_configs["PORT"]
 
-    print("publiquei!!!")
+topic = broker_configs["TOPIC"]
+message = "ALARME ACIONADO"
+
+publish.single(topic, message, hostname=broker_address, port=port)
+print('publiquei')
