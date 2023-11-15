@@ -16,7 +16,7 @@ def mudar_estado_atuador():
 while True:
     print()
     entrada = input("1 - Mostrar dados do banco\n"
-                    "3 - Mudar estado do atuador\n"
+                    "2 - Mudar estado do atuador\n"
                     "0 - Finalizar Sistema\n"
                     "Escolha uma opção: ")
     print()

@@ -9,3 +9,4 @@ def mudar_estado():
     message = "MUDAR ESTADO"
 
     publish.single(topic, message, hostname=broker_address, port=port)
+    return f"Estado alterado"

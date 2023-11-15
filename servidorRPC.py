@@ -15,7 +15,7 @@ class MeuServico(rpyc.Service):
         return resp
     
     def exposed_mudar_estado_atuador(self):
-        mudar_estado()
+        return mudar_estado()
 
     def on_disconnect(self, conn):
         print("disconnect")

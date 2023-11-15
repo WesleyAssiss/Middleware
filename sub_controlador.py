@@ -1,11 +1,13 @@
+import string
 import paho.mqtt.client as mqtt
 from connector import ConnectionDB
 from broker_configs import broker_configs
-import time
+import time, random
 
 
 conn_db = ConnectionDB()
 alarme_ativado = False
+id = 0
 
 
 def on_connect(client, userdata, flags, rc):
@@ -21,7 +23,7 @@ def on_message(client, userdata, msg):
 def liga_alarme():
     global alarme_ativado
     alarme_ativado = True
-    conn_db.insert(0, estado="ALARME ACIONADO")
+    conn_db.insert(altera_id(), estado="ALARME ACIONADO")
     desliga_alarme()
 
 
@@ -30,26 +32,36 @@ def desliga_alarme():
     if alarme_ativado:
         alarme_ativado = False
         time.sleep(5)
-        conn_db.insert(0, estado="ALARME DESLIGADO")
+        conn_db.insert(altera_id(), estado="ALARME DESLIGADO")
 
 
 def muda_estado():
     global alarme_ativado
     if alarme_ativado:
         desliga_alarme()
+        return alarme_ativado
     else:
         liga_alarme()
+        return alarme_ativado
 
 
 def verifica_mensagem(msg):
     if msg.payload.decode() == "ALARME ACIONADO":
-        print('ta aqui')
         liga_alarme()
     elif msg.payload.decode() == "MUDAR ESTADO":
-        print('aquiii')
-        desliga_alarme()
+        muda_estado()
     else:
         'error'
+
+
+def ran_gen(size, chars=string.ascii_uppercase + string.digits): 
+    return ''.join(random.choice(chars) for x in range(size)) 
+
+
+def altera_id():
+    global id
+    id += 1
+    return id
 
 
 client = mqtt.Client()
