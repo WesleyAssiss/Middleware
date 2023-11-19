@@ -54,10 +54,6 @@ def verifica_mensagem(msg):
         'error'
 
 
-def ran_gen(size, chars=string.ascii_uppercase + string.digits): 
-    return ''.join(random.choice(chars) for x in range(size)) 
-
-
 def altera_id():
     global id
     id += 1

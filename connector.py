@@ -1,4 +1,5 @@
 import redis
+import cryptocode
 
 class ConnectionDB:
 
@@ -6,7 +7,8 @@ class ConnectionDB:
         self.redis_connection = redis.StrictRedis(host='localhost', port=6379, decode_responses=True)
         
     def insert(self, id, estado):
-        resp = self.redis_connection.set(id, estado)
+        seg = cryptocode.encrypt(estado, str(id))
+        resp = self.redis_connection.set(id, seg)
         if not resp:
             return 'Error'
         return 'Dado Inserido!'
