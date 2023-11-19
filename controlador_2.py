@@ -34,5 +34,5 @@ if __name__=="__main__":
     
     print('servidor on')
 
-    t = ThreadedServer(MeuServico, port=18862)
+    t = ThreadedServer(MeuServico, port=18861)
     t.start()
