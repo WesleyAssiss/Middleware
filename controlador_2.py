@@ -1,6 +1,7 @@
 import rpyc
 from connector import ConnectionDB
-from pub_sensor import *
+from broker_configs import broker_configs
+import paho.mqtt.publish as publish
 
 
 class MeuServico(rpyc.Service):
@@ -15,7 +16,14 @@ class MeuServico(rpyc.Service):
         return resp
     
     def exposed_mudar_estado_atuador(self):
-        return mudar_estado()
+        broker_address = broker_configs["HOST"]
+        port = broker_configs["PORT"]
+
+        topic = broker_configs["TOPIC"]
+        message = "MUDAR ESTADO"
+
+        publish.single(topic, message, hostname=broker_address, port=port)
+        return f"Estado alterado"
 
     def on_disconnect(self, conn):
         print("disconnect")

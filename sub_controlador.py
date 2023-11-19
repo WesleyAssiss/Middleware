@@ -1,8 +1,7 @@
-import string
 import paho.mqtt.client as mqtt
 from connector import ConnectionDB
 from broker_configs import broker_configs
-import time, random
+import time
 
 
 conn_db = ConnectionDB()
@@ -31,7 +30,7 @@ def desliga_alarme():
     global alarme_ativado
     if alarme_ativado:
         alarme_ativado = False
-        time.sleep(5)
+        time.sleep(8)
         conn_db.insert(altera_id(), estado="ALARME DESLIGADO")
 
 
